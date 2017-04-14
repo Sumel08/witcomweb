@@ -26,5 +26,6 @@ class Evento {
     	sketch nullable: true
     	place nullable: true
     	schedule nullable: true
+    	description(maxSize:1000)
     }
 }

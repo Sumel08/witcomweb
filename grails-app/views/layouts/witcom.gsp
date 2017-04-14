@@ -54,14 +54,14 @@
                 <ul class="nav">
                     <!-- Main menu -->
                     <li class="submenu">
-                         <a href="testWitcom">
+                         <a href="eventInfo">
                             <i class="glyphicon glyphicon-home"></i> Evento
                             <span class="caret pull-right"></span>
                          </a>
                          <!-- Sub menu -->
                          <ul>
-                            <li><a href="login.html">Edit general info</a></li>
-                            <li><a href="signup.html">Signup</a></li>
+                            <li><a href="/evento/eventInfo">Event Info</a></li>
+                            <li><a href="/evento/editEvent">Edit event</a></li>
                         </ul>
                     </li>
                     <li><a href="calendar.html"><i class="glyphicon glyphicon-calendar"></i> Schedule</a></li>

@@ -56,7 +56,7 @@
                                     ${chair.people.name} ${chair.people.surname}<br/>
                                     Email: ${chair.people.email}<br/>
                                     Telephone: ${chair.people.phone}<br/>
-                                    ${chair.people.provenance.placeName}
+                                    Provenance: ${chair.people.provenance.placeName}
                                 </div>
                             </div>
                         </g:each>

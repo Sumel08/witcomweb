@@ -3,7 +3,10 @@ package witcompoli
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
+@Transactional(readOnly = false)
 class EventoController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -103,5 +106,86 @@ class EventoController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    def eventInfo() {
+
+        def evento = Evento.findById(1)
+        println('Acá evento')
+        println(evento.code)
+
+        def chairs = Chairs.findAllByEvento(evento)
+
+        [test: 'test', evento: evento, chairs: chairs]
+    }
+
+    def editEvent() {
+
+        def evento = Evento.findById(1)
+        println('Acá evento')
+        println(evento.code)
+
+        def chairs = Chairs.findAllByEvento(evento)
+
+        [test: 'test', evento: evento, chairs: chairs]
+    }
+
+    def updateEvent() {
+        println(params)
+
+        def evento = Evento.findById(1)
+
+        evento.code = params.eventCode
+        evento.description = params.description
+        evento.name = params.eventName
+
+        println(params.startDate)
+        def startDate = params.startDate.split("T")
+        def startTime = startDate[1].split(":")
+        startDate = startDate[0] + " " + startTime[0] + ":" + startTime[1]
+
+        def endDate = params.endDate.split("T")
+        def endTime = endDate[1].split(":")
+        endDate = endDate[0] + " " + endTime[0] + ":" + endTime[1]
+        
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+        startDate = format.parse(startDate)
+        endDate = format.parse(endDate)
+
+        evento.startDate = startDate
+        evento.endDate = endDate
+
+        try {
+
+            def something = request.getFile("eventPhoto")
+
+
+            println(params.eventPhoto.filename)
+
+            File eventImage = new File("images/" + params.eventPhoto.filename)
+
+            //something.transferTo(eventImage)
+            FileOutputStream fos = new FileOutputStream(eventImage);
+            fos.write(something.getBytes());
+
+            println(eventImage.absolutePath)
+
+            //InputStream targetStream = new FileInputStream(eventImage);
+
+            //render file: targetStream, contentType: 'image/png'
+
+            evento.eventImage.url = "/imagenes/images/" + params.eventPhoto.filename
+        } catch (FileNotFoundException e) {
+
+        } finally {
+            println('Guardando')
+        if (!evento.save()) {
+            evento.errors.allErrors.each {
+                    println(it)
+                }
+            }
+        }
+
+        redirect(action: "editEvent")
     }
 }

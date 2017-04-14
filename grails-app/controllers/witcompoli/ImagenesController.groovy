@@ -104,4 +104,20 @@ class ImagenesController {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+    def images() {
+
+        println(params)
+
+        def filename = "images/" + params.id + "." + params.format
+        println(filename)
+
+        File eventImage = new File(filename)
+
+        InputStream targetStream = new FileInputStream(eventImage);
+
+        render file: targetStream, contentType: 'image/' + params.format
+
+        //render "some text"
+    }
 }
