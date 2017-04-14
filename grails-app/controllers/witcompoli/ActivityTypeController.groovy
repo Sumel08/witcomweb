@@ -3,7 +3,7 @@ package witcompoli
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 class ActivityTypeController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -103,5 +103,52 @@ class ActivityTypeController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    def activities() {
+        def activities = ActivityType.findAll()
+
+        [activities: activities]
+    }
+
+    def createActivity() {
+
+        [test: 'test']
+    }
+
+    def saveActivity() {
+        def activity = new ActivityType()
+        activity.name = params.name
+        activity.description = params.description
+
+        if(!activity.save()) {
+            activity.errors.allErrors.each {
+                println(it)
+            }
+        }
+
+        redirect(action: "activities")
+    }
+
+    def editActivity() {
+        def activity = ActivityType.findById(params.id)
+
+        [activity: activity]
+    }
+
+    def updateActivity() {
+
+        def activity = ActivityType.findById(params.idActivity)
+
+        activity.name = params.name
+        activity.description = params.description
+
+        if(!activity.save()) {
+            activity.errors.allErrors.each {
+                println(it)
+            }
+        }
+
+        redirect(action: "activities")
     }
 }

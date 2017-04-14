@@ -64,8 +64,39 @@
                             <li><a href="/evento/editEvent">Edit event</a></li>
                         </ul>
                     </li>
-                    <li><a href="calendar.html"><i class="glyphicon glyphicon-calendar"></i> Schedule</a></li>
-                    <li><a href="stats.html"><i class="glyphicon glyphicon-stats"></i> Conferences</a></li>
+                    <li class="submenu">
+                         <a href="/activityType/activities">
+                            <i class="glyphicon glyphicon-home"></i> Activity Type
+                            <span class="caret pull-right"></span>
+                         </a>
+                         <!-- Sub menu -->
+                         <ul>
+                            <li><a href="/activityType/activities">All Activities Type</a></li>
+                            <li><a href="/activityType/createActivity">New Activity Type</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                         <a href="/schedule/schedule">
+                            <i class="glyphicon glyphicon-calendar"></i> Schedule
+                            <span class="caret pull-right"></span>
+                         </a>
+                         <!-- Sub menu -->
+                         <ul>
+                            <li><a href="/schedule/schedule">Schedule</a></li>
+                            <li><a href="/schedule/editSchedule">New Activity</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                         <a href="/people/people">
+                            <i class="glyphicon glyphicon-pencil"></i> Speakers
+                            <span class="caret pull-right"></span>
+                         </a>
+                         <!-- Sub menu -->
+                         <ul>
+                            <li><a href="/people/people">Speakers</a></li>
+                            <li><a href="/people/createPerson">New Speaker</a></li>
+                        </ul>
+                    </li>
                     <li><a href="tables.html"><i class="glyphicon glyphicon-list"></i> Workshops</a></li>
                     <li><a href="buttons.html"><i class="glyphicon glyphicon-record"></i> Papers</a></li>
                     <li><a href="editors.html"><i class="glyphicon glyphicon-pencil"></i> Speakers</a></li>

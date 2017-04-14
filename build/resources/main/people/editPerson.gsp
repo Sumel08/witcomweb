@@ -37,8 +37,8 @@
                         <!-- BEGIN FORM -->
                         <div class="content-box-large">
                             <div class="panel-heading">
-                                <div class="panel-title">Horizontal Form</div>
-                              
+                                <div class="panel-title">Horizontal Form </div>
+                                
                                 <div class="panel-options">
                                   <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
                                   <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="layout" content="main" />
+        <meta name="layout" content="witcom" />
         <g:set var="entityName" value="${message(code: 'activityType.label', default: 'ActivityType')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>

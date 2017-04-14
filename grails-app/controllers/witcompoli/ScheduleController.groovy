@@ -104,4 +104,24 @@ class ScheduleController {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+    def schedule() {
+        def event = Evento.findById(1)
+        def schedule = event.schedule
+        def activities = Activity.findBySchedule(schedule)
+
+        [event: event, schedule: schedule, activities: activities]
+    }
+
+    def editSchedule() {
+        def event = Evento.findById(1)
+        def schedule = event.schedule
+        def activities = Activity.findBySchedule(schedule)
+
+        [evento: event, schedule: schedule, activities: activities]
+    }
+
+    def updateSchedule() {
+
+    }
 }

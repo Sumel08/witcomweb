@@ -135,55 +135,119 @@ class EventoController {
 
         def evento = Evento.findById(1)
 
-        evento.code = params.eventCode
-        evento.description = params.description
-        evento.name = params.eventName
+        if (params.flag == "0") {
 
-        println(params.startDate)
-        def startDate = params.startDate.split("T")
-        def startTime = startDate[1].split(":")
-        startDate = startDate[0] + " " + startTime[0] + ":" + startTime[1]
+            evento.code = params.eventCode
+            evento.description = params.description
+            evento.name = params.eventName
 
-        def endDate = params.endDate.split("T")
-        def endTime = endDate[1].split(":")
-        endDate = endDate[0] + " " + endTime[0] + ":" + endTime[1]
-        
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm")
-        startDate = format.parse(startDate)
-        endDate = format.parse(endDate)
+            println(params.startDate)
+            def startDate = params.startDate.split("T")
+            def startTime = startDate[1].split(":")
+            startDate = startDate[0] + " " + startTime[0] + ":" + startTime[1]
 
-        evento.startDate = startDate
-        evento.endDate = endDate
+            def endDate = params.endDate.split("T")
+            def endTime = endDate[1].split(":")
+            endDate = endDate[0] + " " + endTime[0] + ":" + endTime[1]
+            
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+            startDate = format.parse(startDate)
+            endDate = format.parse(endDate)
 
-        try {
+            evento.startDate = startDate
+            evento.endDate = endDate
 
-            def something = request.getFile("eventPhoto")
+            try {
+
+                def something = request.getFile("eventPhoto")
 
 
-            println(params.eventPhoto.filename)
+                println(params.eventPhoto.filename)
 
-            File eventImage = new File("images/" + params.eventPhoto.filename)
+                File eventImage = new File("images/" + params.eventPhoto.filename)
 
-            //something.transferTo(eventImage)
-            FileOutputStream fos = new FileOutputStream(eventImage);
-            fos.write(something.getBytes());
+                //something.transferTo(eventImage)
+                FileOutputStream fos = new FileOutputStream(eventImage);
+                fos.write(something.getBytes());
 
-            println(eventImage.absolutePath)
+                println(eventImage.absolutePath)
 
-            //InputStream targetStream = new FileInputStream(eventImage);
+                //InputStream targetStream = new FileInputStream(eventImage);
 
-            //render file: targetStream, contentType: 'image/png'
+                //render file: targetStream, contentType: 'image/png'
 
-            evento.eventImage.url = "/imagenes/images/" + params.eventPhoto.filename
-        } catch (FileNotFoundException e) {
+                evento.eventImage.url = "/imagenes/images/" + params.eventPhoto.filename
+            } catch (FileNotFoundException e) {
 
-        } finally {
-            println('Guardando')
-        if (!evento.save()) {
-            evento.errors.allErrors.each {
+            } finally {
+                println('Guardando')
+            if (!evento.save()) {
+                evento.errors.allErrors.each {
+                        println(it)
+                    }
+                }
+            }
+        } else {
+            
+            if(!evento.place)
+                evento.place = new Place()
+
+            ////PLACE FOR CHAIR////
+            def place = evento.place
+            place.placeName = params.placeName
+            place.description = params.placeDescription
+            place.telephone = params.placePhone
+            place.email = params.placeEmail
+            place.website = params.placeWebsite
+            place.indication = params.placeIndications
+            place.additionalInfo = params.placeAdditional
+            place.latitude = params.latitude
+            place.longitude = params.longitude
+            place.altitude = params.altitude
+
+            ////PHOTO FOR PLACE////
+            try {
+
+                def placeImage = request.getFile("placeImage")
+
+
+                println(params.placeImage.filename)
+
+                File placePhoto = new File("images/" + params.placeImage.filename)
+
+                FileOutputStream fos = new FileOutputStream(placePhoto);
+                fos.write(placeImage.getBytes());
+
+                println(placePhoto.absolutePath)
+
+                def photo = new Imagenes()
+
+                photo.url = "/imagenes/images/" + params.placeImage.filename
+
+                if (!photo.save()) {
+                    photo.errors.allErrors.each {
+                        println(it)
+                    }
+                }
+
+                place.image = photo
+            } catch (FileNotFoundException e) {
+                println('algo pasó')
+            }
+            ///////////////////////
+            if(!place.save()) {
+                place.errors.allErrors.each {
                     println(it)
                 }
             }
+
+            if(!evento.save()) {
+                evento.errors.allErrors.each {
+                    println(it)
+                }
+            }
+
+            ///////////////////////
         }
 
         redirect(action: "editEvent")

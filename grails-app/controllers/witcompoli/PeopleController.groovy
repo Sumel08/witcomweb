@@ -108,6 +108,21 @@ class PeopleController {
         }
     }
 
+    def people() {
+        def people = People.findAll()
+
+        [people: people]
+    }
+
+    def createPerson() {
+
+        [test:'test']
+    }
+
+    def savePerson() {
+        redirect(action: "people")
+    }
+
     def editPerson() {
         println(params.id)
         //render 'Editing person'
@@ -221,6 +236,6 @@ class PeopleController {
                 }
             }
         */
-        render 'ok'
+        redirect(controller: "evento", action: "eventInfo")
     }
 }
