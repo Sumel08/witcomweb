@@ -6,6 +6,8 @@ import grails.transaction.Transactional
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
+import grails.converters.JSON
+
 @Transactional(readOnly = false)
 class EventoController {
 
@@ -251,5 +253,11 @@ class EventoController {
         }
 
         redirect(action: "editEvent")
+    }
+
+    def getEvent() {
+        def event = Evento.findById(1)
+
+        render event as JSON
     }
 }

@@ -96,6 +96,34 @@
                                             
                                         </div>
                                     </div>
+
+                                    <fieldset>
+                                      <legend>Place</legend>
+
+                                      <div class="form-group">
+                                        <label for="eventName" class="col-sm-2 control-label" style="margin-top: 10px;">Place</label>
+                                        <div class="col-sm-10" style="margin-top: 10px;">
+                                          <select name="place">
+                                            <g:if test="${person.provenance}">
+                                              <g:each var="place" in="${places}">
+                                                <g:if test="${place.id == person.provenance.id}">
+                                                  <option value="${place.id}" selected>${place.placeName}</option>
+                                                </g:if>
+                                                <g:else>
+                                                  <option value="${place.id}">${place.placeName}</option>
+                                                </g:else>
+                                              </g:each>
+                                            </g:if>
+                                            <g:else>
+                                              <g:each var="place" in="${places}">
+                                                <option value="${place.id}">${place.placeName}</option>
+                                              </g:each>
+                                            </g:else>
+                                          </select>
+                                        </div>
+                                      </div>
+
+                                    </fieldset>
                                   
                                     <g:hiddenField name="idPerson" id="idPerson" value="${person.id}"/>
                                   

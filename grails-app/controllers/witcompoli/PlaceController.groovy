@@ -3,7 +3,9 @@ package witcompoli
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
+import grails.converters.JSON
+
+@Transactional(readOnly = false)
 class PlaceController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -103,5 +105,147 @@ class PlaceController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+
+    def places() {
+        def places = Place.findAll()
+
+        println('en places')
+
+        [places: places]
+    }
+
+    def createPlace() {
+
+    }
+
+    def savePlace() {
+        println(params)
+
+
+        ////PLACE FOR CHAIR////
+        def place = new Place()
+        place.placeName = params.placeName
+        place.description = params.placeDescription
+        place.telephone = params.placePhone
+        place.email = params.placeEmail
+        place.website = params.placeWebsite
+        place.indication = params.placeIndications
+        place.additionalInfo = params.placeAdditional
+        place.latitude = params.latitude
+        place.longitude = params.longitude
+        place.altitude = params.altitude
+
+        ////PHOTO FOR PLACE////
+        try {
+
+            def placeImage = request.getFile("placeImage")
+
+
+            println(params.placeImage.filename)
+
+            File placePhoto = new File("images/" + params.placeImage.filename)
+
+            FileOutputStream fos = new FileOutputStream(placePhoto);
+            fos.write(placeImage.getBytes());
+
+            println(placePhoto.absolutePath)
+
+            def photo = new Imagenes()
+
+            photo.url = "/imagenes/images/" + params.placeImage.filename
+
+            if (!photo.save()) {
+                photo.errors.allErrors.each {
+                    println(it)
+                }
+            }
+
+            place.image = photo
+        } catch (FileNotFoundException e) {
+            println('algo pasó')
+        }
+        ///////////////////////
+        if(!place.save()) {
+            place.errors.allErrors.each {
+                println(it)
+            }
+        }
+
+        ///////////////////////
+
+        redirect(action: "places")
+    }
+
+    def editPlace() {
+        def place = Place.findById(params.id)
+
+        println(params.id)
+
+        [place: place]
+    }
+
+    def updatePlace() {
+        println(params)
+
+
+        ////PLACE FOR CHAIR////
+        def place = Place.findById(params.idPlace)
+        place.placeName = params.placeName
+        place.description = params.placeDescription
+        place.telephone = params.placePhone
+        place.email = params.placeEmail
+        place.website = params.placeWebsite
+        place.indication = params.placeIndications
+        place.additionalInfo = params.placeAdditional
+        place.latitude = params.latitude
+        place.longitude = params.longitude
+        place.altitude = params.altitude
+
+        ////PHOTO FOR PLACE////
+        try {
+
+            def placeImage = request.getFile("placeImage")
+
+
+            println(params.placeImage.filename)
+
+            File placePhoto = new File("images/" + params.placeImage.filename)
+
+            FileOutputStream fos = new FileOutputStream(placePhoto);
+            fos.write(placeImage.getBytes());
+
+            println(placePhoto.absolutePath)
+
+            def photo = new Imagenes()
+
+            photo.url = "/imagenes/images/" + params.placeImage.filename
+
+            if (!photo.save()) {
+                photo.errors.allErrors.each {
+                    println(it)
+                }
+            }
+
+            place.image = photo
+        } catch (FileNotFoundException e) {
+            println('algo pasó')
+        }
+        ///////////////////////
+        if(!place.save()) {
+            place.errors.allErrors.each {
+                println(it)
+            }
+        }
+
+        ///////////////////////
+
+        redirect(action: "places")
+    }
+
+    def getPlaces() {
+        def places = Place.findAll()
+
+        render places as JSON
     }
 }

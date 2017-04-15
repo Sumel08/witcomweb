@@ -7,6 +7,13 @@ body {
   padding: 0px;
 }
 
+.center-cropped {
+  object-fit: none; /* Do not scale the image */
+  object-position: center; /* Center the image within the element */
+  height: 100px;
+  width: 100px;
+}
+
 .page-content > .row {
   margin-left: 0px !important;
   margin-right: 0px !important;

@@ -83,7 +83,7 @@
                          <!-- Sub menu -->
                          <ul>
                             <li><a href="/schedule/schedule">Schedule</a></li>
-                            <li><a href="/schedule/editSchedule">New Activity</a></li>
+                            <li><a href="/schedule/createActivity">New Activity</a></li>
                         </ul>
                     </li>
                     <li class="submenu">
@@ -97,9 +97,17 @@
                             <li><a href="/people/createPerson">New Speaker</a></li>
                         </ul>
                     </li>
-                    <li><a href="tables.html"><i class="glyphicon glyphicon-list"></i> Workshops</a></li>
-                    <li><a href="buttons.html"><i class="glyphicon glyphicon-record"></i> Papers</a></li>
-                    <li><a href="editors.html"><i class="glyphicon glyphicon-pencil"></i> Speakers</a></li>
+                    <li class="submenu">
+                         <a href="/place/places">
+                            <i class="glyphicon glyphicon-pencil"></i> Places
+                            <span class="caret pull-right"></span>
+                         </a>
+                         <!-- Sub menu -->
+                         <ul>
+                            <li><a href="/place/places">Places</a></li>
+                            <li><a href="/place/createPlace">New Place</a></li>
+                        </ul>
+                    </li>
                     <li><a href="forms.html"><i class="glyphicon glyphicon-tasks"></i> Tourism</a></li>
                     <li class="submenu">
                          <a href="#">

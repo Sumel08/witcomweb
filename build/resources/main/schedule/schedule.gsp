@@ -53,6 +53,7 @@
                                       <th>End</th>
                                       <th>Activity Type</th>
                                       <th>Title</th>
+                                      <th>Speakers</th>
                                       <th>Actions</th>
                                     </tr>
                                   </thead>

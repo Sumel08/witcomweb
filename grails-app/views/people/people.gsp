@@ -53,6 +53,7 @@
                                       <th>Surname</th>
                                       <th>Email</th>
                                       <th>Telephone</th>
+                                      <th>Provenance</th>
                                       <th>Actions</th>
                                     </tr>
                                   </thead>
@@ -63,6 +64,7 @@
                                           <td>${person.surname}</td>
                                           <td>${person.email}</td>
                                           <td>${person.phone}</td>
+                                          <td>${person.provenance.placeName}</td>
                                           
                                           <td>
                                           <a href="/people/editPerson/${person.id}" class="btn btn-warning"> Edit </a>

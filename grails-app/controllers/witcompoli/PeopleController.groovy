@@ -6,6 +6,8 @@ import grails.transaction.Transactional
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
+import grails.converters.JSON
+
 @Transactional(readOnly = false)
 class PeopleController {
 
@@ -116,10 +118,77 @@ class PeopleController {
 
     def createPerson() {
 
-        [test:'test']
+        def places = Place.findAll()
+
+        [places: places]
     }
 
     def savePerson() {
+
+        println(params)
+
+        def place = Place.findById(params.place)
+
+        ////PERSON////
+        def person = new People()
+
+        person.name = params.name
+        person.surname = params.surname
+        person.email = params.email
+        person.phone = params.phone
+        person.resume = params.resume
+
+        def birthdate = params.dateOfBirth
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd")
+        birthdate = format.parse(birthdate)
+
+        person.birthdate = birthdate
+
+        ////PHOTO FOR PERSON////
+        try {
+
+            def something = request.getFile("profilePhoto")
+
+
+            println(params.profilePhoto.filename)
+
+            File profilePhoto = new File("images/" + params.profilePhoto.filename)
+
+            //something.transferTo(eventImage)
+            FileOutputStream fos = new FileOutputStream(profilePhoto);
+            fos.write(something.getBytes());
+
+            println(profilePhoto.absolutePath)
+
+            //InputStream targetStream = new FileInputStream(eventImage);
+
+            //render file: targetStream, contentType: 'image/png'
+
+            def personPhoto = new Imagenes()
+
+            personPhoto.url = "/imagenes/images/" + params.profilePhoto.filename
+
+            if(!personPhoto.save()) {
+                personPhoto.errors.allErrors.each {
+                    println(it)
+                }
+            }
+
+            person.photo = personPhoto
+        } catch (FileNotFoundException e) {
+            println('algo pasó')
+        }
+        ////////////////////////
+
+        person.provenance = place
+
+        if(!person.save()) {
+            person.errors.allErrors.each {
+                println(it)
+            }
+        }
+        //////////////
+
         redirect(action: "people")
     }
 
@@ -129,13 +198,16 @@ class PeopleController {
 
         def person = People.findById(params.id)
 
-        [person: person]
+        def places = Place.findAll()
+
+        [person: person, places: places]
     }
 
     def updatePerson() {
         println(params)
 
         def person = People.findById(params.idPerson)
+        def place = Place.findById(params.place)
 
         println(person)
 
@@ -150,6 +222,7 @@ class PeopleController {
         birthdate = format.parse(birthdate)
 
         person.birthdate = birthdate
+        person.provenance = place
 
         try {
 
@@ -170,6 +243,10 @@ class PeopleController {
 
             //render file: targetStream, contentType: 'image/png'
 
+            if (!person.photo) {
+                person.photo = new Imagenes()
+            }
+
             person.photo.url = "/imagenes/images/" + params.profilePhoto.filename
         } catch (FileNotFoundException e) {
             println('algo pasó')
@@ -182,60 +259,12 @@ class PeopleController {
             }
         }
         
-        //def startTime = startDate[1].split(":")
-        //startDate = startDate[0] + " " + startTime[0] + ":" + startTime[1]
+        redirect(action: "people")
+    }
 
+    def getPeople() {
+        def people = People.findAll()
 
-        /*evento.code = params.eventCode
-        evento.description = params.description
-        evento.name = params.eventName
-
-        println(params.startDate)
-        def startDate = params.startDate.split("T")
-        def startTime = startDate[1].split(":")
-        startDate = startDate[0] + " " + startTime[0] + ":" + startTime[1]
-
-        def endDate = params.endDate.split("T")
-        def endTime = endDate[1].split(":")
-        endDate = endDate[0] + " " + endTime[0] + ":" + endTime[1]
-        
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm")
-        startDate = format.parse(startDate)
-        endDate = format.parse(endDate)
-
-        evento.startDate = startDate
-        evento.endDate = endDate
-
-        try {
-
-            def something = request.getFile("eventPhoto")
-
-
-            println(params.eventPhoto.filename)
-
-            File eventImage = new File("images/" + params.eventPhoto.filename)
-
-            //something.transferTo(eventImage)
-            FileOutputStream fos = new FileOutputStream(eventImage);
-            fos.write(something.getBytes());
-
-            println(eventImage.absolutePath)
-
-            //InputStream targetStream = new FileInputStream(eventImage);
-
-            //render file: targetStream, contentType: 'image/png'
-
-            evento.eventImage.url = "/imagenes/images/" + params.eventPhoto.filename
-        } catch (FileNotFoundException e) {
-
-        } finally {
-            println('Guardando')
-        if (!evento.save()) {
-            evento.errors.allErrors.each {
-                    println(it)
-                }
-            }
-        */
-        redirect(controller: "evento", action: "eventInfo")
+        render people as JSON
     }
 }
