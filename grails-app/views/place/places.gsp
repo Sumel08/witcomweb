@@ -53,6 +53,7 @@
                                       <th>Place Name</th>
                                       <th>Email</th>
                                       <th>Telephone</th>
+                                      <th>Category</th>
                                       <th>Actions</th>
                                     </tr>
                                   </thead>
@@ -63,6 +64,7 @@
                                           <td>${place.placeName}</td>
                                           <td>${place.email}</td>
                                           <td>${place.telephone}</td>
+                                          <td>${place.placeCategory?place.placeCategory.category:"Without category"}</td>
                                           
                                           <td>
                                           <a href="/place/editPlace/${place.id}" class="btn btn-warning"> Edit </a>

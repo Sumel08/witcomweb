@@ -116,12 +116,13 @@ class PlaceController {
     }
 
     def createPlace() {
+        def placeCategories = PlaceCategory.findAll()
 
+        [placeCategories: placeCategories]
     }
 
     def savePlace() {
         println(params)
-
 
         ////PLACE FOR CHAIR////
         def place = new Place()
@@ -135,6 +136,13 @@ class PlaceController {
         place.latitude = params.latitude
         place.longitude = params.longitude
         place.altitude = params.altitude
+
+        if (params.placeCategory){
+            def placeCategory = PlaceCategory.findById(params.placeCategory)
+            println(placeCategory)
+            println(params.placeCategory)
+            place.placeCategory = placeCategory
+        }
 
         ////PHOTO FOR PLACE////
         try {
@@ -179,10 +187,9 @@ class PlaceController {
 
     def editPlace() {
         def place = Place.findById(params.id)
+        def placeCategories = PlaceCategory.findAll()
 
-        println(params.id)
-
-        [place: place]
+        [place: place, placeCategories: placeCategories]
     }
 
     def updatePlace() {
@@ -201,6 +208,13 @@ class PlaceController {
         place.latitude = params.latitude
         place.longitude = params.longitude
         place.altitude = params.altitude
+
+        if (params.placeCategory){
+            def placeCategory = PlaceCategory.findById(params.placeCategory)
+            println(placeCategory)
+            println(params.placeCategory)
+            place.placeCategory = placeCategory
+        }
 
         ////PHOTO FOR PLACE////
         try {

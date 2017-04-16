@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap-select.min.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap-tags.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/forms.css"/>
+        <link rel="stylesheet" type="text/css" href="/assets/bootstrap-select.css"/>
 
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
@@ -46,6 +47,27 @@
                             </div>
                             <div class="panel-body">
                                 <g:form name="placeInfo" action="updatePlace" enctype="multipart/form-data">
+
+                                    <div class="form-group">
+                                      <label for="eventName" class="col-sm-2 control-label" style="margin-top: 10px;">Place Category</label>
+                                      <div class="col-sm-10" style="margin-top: 10px;">
+                                        <select name="placeCategory" class="selectpicker" data-live-search="true" title="Please select a category">
+                                            <g:each var="placeCategory" in="${placeCategories}">
+                                              <g:if test="${place.placeCategory}">
+                                                <g:if test="${place.placeCategory.id == placeCategory.id}">
+                                                  <option value="${placeCategory.id}" selected>${placeCategory.category}</option>
+                                                </g:if>
+                                                <g:else>
+                                                  <option value="${placeCategory.id}">${placeCategory.category}</option>
+                                                </g:else>
+                                              </g:if>
+                                              <g:else>
+                                                <option value="${placeCategory.id}">${placeCategory.category}</option>
+                                              </g:else>      
+                                            </g:each>
+                                        </select>
+                                      </div>
+                                    </div>
 
                                     <div class="form-group">
                                       <label for="eventName" class="col-sm-2 control-label" style="margin-top: 10px;">Place Name</label>
@@ -150,6 +172,7 @@
         </div>
 
         <script src="https://code.jquery.com/jquery.js" type="text/javascript"></script>
+        <script src="/assets/bootstrap-select.js" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(document).ready ( function(){

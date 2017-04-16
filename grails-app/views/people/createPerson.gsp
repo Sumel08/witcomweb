@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap-select.min.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/bootstrap-tags.css"/>
         <link rel="stylesheet" type="text/css" href="/assets/forms.css"/>
+        <link rel="stylesheet" type="text/css" href="/assets/bootstrap-select.css"/>
 
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
@@ -107,7 +108,7 @@
                                     <div class="form-group">
                                       <label for="eventName" class="col-sm-2 control-label" style="margin-top: 10px;">Place</label>
                                       <div class="col-sm-10" style="margin-top: 10px;">
-                                        <select name="place">
+                                        <select name="place" class="selectpicker" data-live-search="true">
                                           <g:each var="place" in="${places}">
                                             <option value="${place.id}">${place.placeName}</option>
                                           </g:each>
@@ -141,6 +142,7 @@
         </div>
 
         <script src="https://code.jquery.com/jquery.js" type="text/javascript"></script>
+        <script src="/assets/bootstrap-select.js" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(document).ready ( function(){

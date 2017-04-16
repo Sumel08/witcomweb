@@ -108,6 +108,17 @@
                             <li><a href="/place/createPlace">New Place</a></li>
                         </ul>
                     </li>
+                    <li class="submenu">
+                         <a href="/placeCategory/placeCategories">
+                            <i class="glyphicon glyphicon-pencil"></i> Place Category
+                            <span class="caret pull-right"></span>
+                         </a>
+                         <!-- Sub menu -->
+                         <ul>
+                            <li><a href="/placeCategory/placeCategories">Places</a></li>
+                            <li><a href="/placeCategory/createPlaceCategory">New Place Category</a></li>
+                        </ul>
+                    </li>
                     <li><a href="forms.html"><i class="glyphicon glyphicon-tasks"></i> Tourism</a></li>
                     <li class="submenu">
                          <a href="#">

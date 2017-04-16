@@ -15,6 +15,7 @@ class Place {
 	Imagenes image
 
 	static hasMany = [placeSocialNetworks: PlaceSocialNetworks]
+	static belongsTo = [placeCategory: PlaceCategory]
 
 	static mapping = {
         id generator: 'identity'
@@ -22,5 +23,6 @@ class Place {
     }
 
     static constraints = {
+    	placeCategory nullable: true
     }
 }

@@ -129,13 +129,24 @@ class EventoController {
 
         def chairs = Chairs.findAllByEvento(evento)
 
-        [test: 'test', evento: evento, chairs: chairs]
+        def places = Place.findAll()
+        def people = People.findAll()
+
+        [places: places, evento: evento, chairs: chairs, people: people]
     }
 
     def updateEvent() {
         println(params)
 
         def evento = Evento.findById(1)
+        //def list = evento.chairs.id
+
+        
+        //def list2 = [12]
+        
+        
+        //println(list2)
+        Chairs.findAllByEvento(evento)*.delete()
 
         if (params.flag == "0") {
 
@@ -158,6 +169,21 @@ class EventoController {
 
             evento.startDate = startDate
             evento.endDate = endDate
+
+            def place = Place.findById(params.place)
+            evento.place = place
+
+            println('before')
+            params.chairs.each {
+                def chair = new Chairs()
+                chair.evento = evento
+                chair.people = People.findById(it)
+
+                if(!chair.save()){
+                    println('Algo pasó')
+                }
+            }
+            println('after')
 
             try {
 

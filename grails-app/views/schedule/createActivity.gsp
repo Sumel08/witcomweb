@@ -52,7 +52,7 @@
                                         <div class="form-group">
                                           <label for="eventName" class="col-sm-2 control-label" style="margin-top: 10px;">Activity Type</label>
                                           <div class="col-sm-10" style="margin-top: 10px;">
-                                            <select name="activityType">
+                                            <select name="activityType" class="selectpicker" data-live-search="true">
                                               <g:each var="activityType" in="${activitiesType}">
                                                 <option value="${activityType.id}">${activityType.name}</option>
                                               </g:each>
@@ -128,7 +128,7 @@
                                         <div class="form-group">
                                           <label for="eventName" class="col-sm-2 control-label" style="margin-top: 10px;">Place</label>
                                           <div class="col-sm-10" style="margin-top: 10px;">
-                                            <select name="place">
+                                            <select name="place" class="selectpicker" data-live-search="true">
                                               <g:each var="place" in="${places}">
                                                 <option value="${place.id}">${place.placeName}</option>
                                               </g:each>
@@ -141,7 +141,7 @@
                                         <div class="form-group">
                                           <label for="eventName" class="col-sm-2 control-label" style="margin-top: 10px;">Speaker (Speakers)</label>
                                           <div class="col-sm-10" style="margin-top: 10px;">
-                                            <select name="speakers" class="selectpicker" multiple>
+                                            <select name="speakers" class="selectpicker" data-live-search="true" multiple>
                                                 <g:each var="person" in="${people}">
                                                     <option value="${person.id}">${person.name}</option>      
                                                 </g:each>
